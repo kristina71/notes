@@ -1,0 +1,11 @@
+
+-- +migrate Up
+CREATE TABLE IF NOT EXISTS notes (
+    id INTEGER PRIMARY KEY,
+	text TEXT,
+	created_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- +migrate Down
+DROP TABLE IF EXISTS notes;
