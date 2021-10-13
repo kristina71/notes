@@ -1,0 +1,11 @@
+development:
+    dialect: sqlite3
+    datasource: notes.db
+    dir: migrations
+    
+
+production:
+    dialect: sqlite3
+    datasource: notes.db
+    dir: migrations/sqlite3
+    table: migrations
