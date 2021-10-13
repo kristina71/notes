@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"notes/pkg/endpoints"
+	"notes/pkg/service"
 	"os"
 	"os/signal"
 	"syscall"
@@ -15,10 +16,10 @@ type App struct {
 	server *http.Server
 }
 
-func New() *App {
+func New(service *service.Service) *App {
 	return &App{server: &http.Server{
 		Addr:         ":6969",
-		Handler:      endpoints.New(),
+		Handler:      endpoints.New(service),
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}}
