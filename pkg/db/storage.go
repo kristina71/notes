@@ -2,6 +2,8 @@ package db
 
 import (
 	"context"
+	"database/sql"
+	"fmt"
 	"log"
 	"notes/pkg/models"
 
@@ -37,4 +39,26 @@ func (s *Storage) Get(ctx context.Context) ([]models.Note, error) {
 	}
 
 	return notes, nil
+}
+
+func (s *Storage) GetById(ctx context.Context, note models.Note) (models.Note, error) {
+	fmt.Println(note.Id)
+	query, args, err := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar).Select("id", "text", "created_time", "updated_time").From(tableName).Where(squirrel.Eq{"id": note.Id}).ToSql()
+	if err != nil {
+		log.Println(err)
+		return models.Note{}, err
+	}
+
+	note_ := models.Note{}
+	err = s.db.Get(&note_, query, args...)
+
+	if err == sql.ErrNoRows {
+		return models.Note{}, err
+	}
+
+	if err != nil {
+		return models.Note{}, err
+	}
+
+	return note_, nil
 }

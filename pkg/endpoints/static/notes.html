@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>{{.Title}}</title>
-	</head>
-	<body>
+{{.Header}}
 	{{ range $elem_val := .Items }}
 	<div>
+		<h1>Note list</h1>
 	{{ $elem_val.Id }}
-    {{ $elem_val.Text }}
-	{{ $elem_val.CreatedTime }}
-	{{ $elem_val.UpdatedTime }}
+    <a href="/note/{{ $elem_val.Id }}">{{ $elem_val.Text }}</a><br>
+	Created: {{ $elem_val.CreatedTime }}<br>
+	Updated: {{ $elem_val.UpdatedTime }}<br>
+	<br>
+	<br>
 	</div>
-		{{else}}<div><strong>no rows</strong></div>{{end}}
-	</body>
-</html>
+		{{else}}<div>
+			<h1><h1>Note list is empty</h1></h1>
+			<strong>no rows</strong>
+		</div>{{end}}
+	{{.Footer}}

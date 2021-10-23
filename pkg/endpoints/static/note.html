@@ -1,0 +1,16 @@
+{{.Header}}
+	<div>
+    {{ if .Item}}
+    <h1>Note {{ .Item.Id }}</h1>
+	{{ .Item.Id }}
+    {{ .Item.Text }}
+	{{ .Item.CreatedTime }}
+	{{ .Item.UpdatedTime }}
+	</div>
+		{{else}}
+        <div>
+            <h1>Not found</h1>
+            <strong>no rows</strong>
+        </div>
+        {{end}}
+    {{.Footer}}
