@@ -27,3 +27,11 @@ func (u *Note) GetNotes(ctx context.Context) ([]models.Note, error) {
 	}
 	return notes, nil
 }
+
+func (u *Note) GetNote(ctx context.Context, note models.Note) (models.Note, error) {
+	note, err := u.adapter.GetById(ctx, note)
+	if err != nil {
+		return models.Note{}, err
+	}
+	return note, err
+}
