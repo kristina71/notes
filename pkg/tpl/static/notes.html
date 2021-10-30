@@ -1,0 +1,12 @@
+{{ define "notesHtml"}}
+	{{ template "headerHtml"}}
+	{{ range $elem_val := .Items }}
+	<div>
+	{{ $elem_val.Id }}<br>
+    <a href="/note/{{ $elem_val.Id }}" target="blank">{{ $elem_val.Text }}</a><br>
+	{{ $elem_val.CreatedTime }}<br>
+	{{ $elem_val.UpdatedTime }}<br>
+	</div>
+		{{else}}<div><strong>no rows</strong></div>{{end}}
+{{ template "footerHtml"}}
+{{end}}

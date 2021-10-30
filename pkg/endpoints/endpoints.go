@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"notes/pkg/models"
 	"notes/pkg/service"
-	"text/template"
+	"notes/pkg/tpl"
 
 	_ "embed"
 
@@ -29,19 +29,8 @@ type endpoint struct {
 	service *service.Service
 }
 
-//go:embed static/notes.html
-var notesTpl string
-
 func (e endpoint) GetNotes(w http.ResponseWriter, r *http.Request) {
 	notes, err := e.service.GetNotes(r.Context())
-
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		log.Println(err)
-		return
-	}
-
-	t, err := template.New("webpage").Parse(notesTpl)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -53,15 +42,9 @@ func (e endpoint) GetNotes(w http.ResponseWriter, r *http.Request) {
 		Title string
 		Items []models.Note
 	}{
-		Title: "My page",
+		Title: "My notes",
 		Items: notes,
 	}
 
-	err = t.Execute(w, data)
-
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		log.Println(err)
-		return
-	}
+	tpl.Render(w, r, data, "notesHtml")
 }
